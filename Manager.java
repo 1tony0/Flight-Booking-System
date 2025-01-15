@@ -42,17 +42,17 @@ public class Manager {
 
             //flight method
             System.out.println("Enter the flight number: ");
-            int flightNumber = sc.nextInt(); sc.nextLine();
+            int flightNumber = sc.nextInt(); sc.nextLine();//consume newline
             System.out.println("Enter the origin: ");
-            String origin = sc.next(); sc.nextLine();
+            String origin = sc.next(); sc.nextLine();//consume newline
             System.out.println("Enter the destination: ");
-            String destination = sc.next(); sc.nextLine();
+            String destination = sc.next(); sc.nextLine();//consume newline
             System.out.println("Enter the departure time: ");
-            String departureTime = sc.next(); sc.nextLine();
+            String departureTime = sc.next(); sc.nextLine();//consume newline
             System.out.println("Enter the capacity: ");
-            int capacity = sc.nextInt(); sc.nextLine();
+            int capacity = sc.nextInt(); sc.nextLine();//consume newline
             System.out.println("Enter the original price: ");
-            double originalPrice = sc.nextDouble(); sc.nextLine();
+            double originalPrice = sc.nextDouble(); sc.nextLine();//consume newline
             Flight flight = new Flight(flightNumber, origin, destination, departureTime, capacity, originalPrice);
             flights.add(flight);
         }
@@ -103,36 +103,33 @@ public class Manager {
 
 
 
-//task is to make this into a possible drop down menu options where I can simply just let the user deciede if they would like to whatever the user wants to do.
+//making a super user friendly dash
 
+public static void main(String[] args) {
+    Manager manager = new Manager();
+    Scanner scanner = new Scanner(System.in);
+    boolean running = true;
 
+    while (running) {
+        System.out.println("Select an option:");
+        System.out.println("1) End the code");
+        System.out.println("2) Add a flight/create flight");
+        System.out.println("3) Display available flights");
+        System.out.println("4) Book seats");
 
+        int choice = scanner.nextInt(); scanner.nextLine(); //consume newline
 
-
-
-    public static void main(String[] args) {
-        Manager manager = new Manager();
-        Scanner scanner = new Scanner(System.in);
-        boolean running = true;
-
-        while (running) {
-            System.out.println("Select an option:");
-            System.out.println("1) End the code");
-            System.out.println("2) Add a flight/create flight");
-            System.out.println("3) Display available flights");
-            System.out.println("4) Book seats");
-
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-
-            switch (choice) {
-                case 1:
-                    running = false;
-                    break;
-                case 2:
-                    manager.createFlights();
-                    break;
-                case 3:
+        switch (choice) {
+            case 1:
+                running = false;
+                break;
+            case 2:
+                manager.createFlights();
+                break;
+            case 3:
+                if (manager.flights.isEmpty()) {
+                    System.out.println("No flights available. Please create flights first.");
+                } else {
                     System.out.print("Enter origin: ");
                     String origin = scanner.nextLine();
                     System.out.print("Enter destination: ");
@@ -145,13 +142,16 @@ public class Manager {
                             System.out.println(flight);
                         }
                     }
-                    break;
-                case 4:
+                }
+                break;
+            case 4:
+                if (manager.flights.isEmpty()) {
+                    System.out.println("No flights available. Please create flights first.");
+                } else {
                     boolean booking = true;
-                    while (booking) {
+                    while (booking = true) {
                         System.out.print("Enter flight number: ");
-                        int flightNumber = scanner.nextInt();
-                        scanner.nextLine(); // Consume newline
+                        int flightNumber = scanner.nextInt(); scanner.nextLine(); //consume newline
                         Flight flight = manager.getFlight(flightNumber);
                         if (flight == null) {
                             System.out.println("Flight number does not exist.");
@@ -164,18 +164,15 @@ public class Manager {
                             System.out.print("Enter member name: ");
                             String name = scanner.nextLine();
                             System.out.print("Enter member age: ");
-                            int age = scanner.nextInt();
-                            scanner.nextLine(); // Consume newline
+                            int age = scanner.nextInt();scanner.nextLine(); //c0nsume newline
                             System.out.print("Enter member years of membership: ");
-                            int yearsOfMembership = scanner.nextInt();
-                            scanner.nextLine(); // Consume newline
+                            int yearsOfMembership = scanner.nextInt(); scanner.nextLine(); //consume newline
                             passenger = new Member(name, age, yearsOfMembership);
                         } else {
                             System.out.print("Enter non-member name: ");
                             String name = scanner.nextLine();
                             System.out.print("Enter non-member age: ");
-                            int age = scanner.nextInt();
-                            scanner.nextLine(); // Consume newline
+                            int age = scanner.nextInt();scanner.nextLine(); //consume newline
                             passenger = new NonMember(name, age);
                         }
                         manager.bookSeat(flightNumber, passenger);
@@ -195,20 +192,23 @@ public class Manager {
                             running = false;
                         }
                     }
-                    break;
-                default:
-                    System.out.println("Invalid option. Please try again.");
-            }
+                }
+                break;
+            default:
+                System.out.println("Invalid option. Please try again.");
         }
-
-        double totalAmount = 0;
-        System.out.println("Your cart:");
-        for (Ticket ticket : manager.cart) {
-            System.out.println(ticket);
-            totalAmount += ticket.getPrice();
-        }
-        System.out.println("Total amount: " + totalAmount);
-
-        scanner.close();
     }
+
+    double totalAmount = 0;
+    System.out.println("Your cart:");
+    for (Ticket ticket : manager.cart) {
+        System.out.println(ticket);
+        totalAmount += ticket.getPrice();
+    }
+    System.out.println("Total amount: " + totalAmount);
+
+    scanner.close();
 }
+}
+
+//Next step to make this better would be to go validate what the user inputs. 
